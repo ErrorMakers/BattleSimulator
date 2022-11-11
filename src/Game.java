@@ -16,7 +16,14 @@ public class Game {
         return names[rand.nextInt(names.length)];
     }
 
+    private Character generateRandomCharacter() {
+        int race = rand.nextInt(2 - 1) + 1;
 
+        if(race == 1) {
+            return new Warrior(getRandomName(), getRandomNumberBetween(100, 200));  // Warrior
+        }
+        return new Wizard(getRandomName(), getRandomNumberBetween(50, 100));  // Wizard
+    }
 
     public void nextRound() {
         //TODO
