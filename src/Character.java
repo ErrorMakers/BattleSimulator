@@ -1,9 +1,10 @@
-abstract class Character {
+public abstract class Character {
     private String id;
     private String name;
     private int hp;
     private boolean isAlive;
     private static Integer counter = 0;
+    abstract void Attack(Character character);
 
     public Character(String name, int hp) {
         setId();
