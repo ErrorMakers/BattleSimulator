@@ -28,4 +28,9 @@ public class Game {
     public void nextRound() {
         //TODO
     }
+
+    public void init() {
+        duelistOne = generateRandomCharacter();
+        duelistTwo = generateRandomCharacter();
+    }
 }
