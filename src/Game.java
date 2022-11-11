@@ -26,7 +26,8 @@ public class Game {
     }
 
     public void nextRound() {
-        //TODO
+        duelistOne.attack(duelistTwo);
+        duelistTwo.attack(duelistOne);
     }
 
     public void init() {
