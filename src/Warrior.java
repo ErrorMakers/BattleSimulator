@@ -5,21 +5,21 @@ public class Warrior extends Character {
     //constructor name, hp, stamina, strength
     public Warrior(String name, int hp, int stamina, int strength) {
         super(name, hp);
-          setStamina();
-          setStrength();
+          setStamina(stamina);
+          setStrength(strength);
 
     }
     public int getStamina() {
         return stamina;
     }
-    public void setStamina() {
+    public void setStamina(int stamina) {
         this.stamina = (int) (Math.random()*40+10);
     }
 
     public int getStrength() {
         return strength;
     }
-    public void setStrength() {
+    public void setStrength(int strength) {
         this.strength = (int) (Math.random()*10+0);
     }
     public int setRandomHp(){
