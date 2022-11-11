@@ -55,6 +55,7 @@ public class Wizard extends Character {
     }
 
     public void attack(Character enemy) {
+        enemy.setHp = enemy.getHp - getIntelligence;
 
     }
 }
