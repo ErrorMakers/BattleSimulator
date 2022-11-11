@@ -49,4 +49,8 @@ public class Warrior extends Character {
         return damage;
     }
 
+    @Override
+    void Attack(Character character) {
+
+    }
 }
