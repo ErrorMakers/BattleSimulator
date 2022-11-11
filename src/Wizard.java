@@ -57,4 +57,9 @@ public class Wizard extends Character {
     public void attack(Character enemy) {
 
     }
+
+    @Override
+    void Attack(Character character) {
+
+    }
 }
