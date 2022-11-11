@@ -20,7 +20,7 @@ public class Game {
         int race = rand.nextInt(2 - 1) + 1;
 
         if(race == 1) {
-            return new Warrior(getRandomName(), getRandomNumberBetween(100, 200));  // Warrior
+            return new Warrior(getRandomName(), getRandomNumberBetween(100, 200), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 10));  // Warrior
         }
         return new Wizard(getRandomName(), getRandomNumberBetween(50, 100));  // Wizard
     }
