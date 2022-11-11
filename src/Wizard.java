@@ -31,6 +31,7 @@ public class Wizard extends Character {
 
 
     public Wizard(String name, int hp, int mana, int intelligence) {
+
         super(name, hp);
         setMana();
         setIntelligence();
@@ -57,6 +58,7 @@ public class Wizard extends Character {
     public void attack(Character enemy) {
 
     }
+
 
     @Override
     void Attack(Character character) {
