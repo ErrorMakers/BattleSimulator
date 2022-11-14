@@ -12,14 +12,14 @@ public class Warrior extends Character {
         return stamina;
     }
     public void setStamina(int stamina) {
-        this.stamina = (int) (Math.random()*40+10);
+        this.stamina = stamina;
     }
 
     public int getStrength() {
         return strength;
     }
     public void setStrength(int strength) {
-        this.strength = (int) (Math.random()*10+0);
+        this.strength = strength;
     }
 
      public int heavyAttack(){
