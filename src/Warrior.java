@@ -7,7 +7,6 @@ public class Warrior extends Character {
         super(name, hp);
           setStamina(stamina);
           setStrength(strength);
-
     }
     public int getStamina() {
         return stamina;
@@ -22,11 +21,7 @@ public class Warrior extends Character {
     public void setStrength(int strength) {
         this.strength = (int) (Math.random()*10+0);
     }
-    public int setRandomHp(){
-        int random=(int)(Math.random()*100+100);
-        this.setHp(random);
-        return random;
-    }
+
      public int heavyAttack(){
         int damage = getStrength();
         setStamina(getStamina() -5);
@@ -38,17 +33,23 @@ public class Warrior extends Character {
         return damage;
     }
 
-
-    @Override
-    void Attack(Character character) {
+    int calculateDamage() {
         if (getStamina()>=5){
             return heavyAttack();
+        }
+        if (getStamina()==0){
+            setStamina(getStamina() + 2);
+            return 0;
         }
         if (getStamina()<5){
             return weakAttack();
         }
-        if (getStamina()==0){
-            setStamina(getStamina() + 2);
-        }
+        return 0;
+         }
+
+    @Override
+    void attack(Character character) {
+        int damage = calculateDamage();
+        character.setHp(character.getHp()-damage);
     }
 }
