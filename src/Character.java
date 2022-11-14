@@ -1,12 +1,15 @@
+public abstract class Character implements Attacker {
 
-public abstract class Character {
     private String id;
     private String name;
     private int hp;
     private boolean isAlive;
+
     private static Integer counter = 0;
 
-    abstract void Attack(Character character);
+
+
+    public abstract void attack(Character character);
 
 
     public Character(String name, int hp) {
@@ -49,4 +52,6 @@ public abstract class Character {
     public void setAlive(boolean alive) {
         isAlive = alive;
     }
+
+
 }

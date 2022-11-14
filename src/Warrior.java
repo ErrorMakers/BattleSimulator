@@ -48,7 +48,7 @@ public class Warrior extends Character {
          }
 
     @Override
-    void attack(Character character) {
+    public void attack(Character character) {
         int damage = calculateDamage();
         character.setHp(character.getHp()-damage);
     }
