@@ -4,8 +4,12 @@ public abstract class Character implements Attacker {
     private String name;
     private int hp;
     private boolean isAlive;
+
     private static Integer counter = 0;
-    abstract void attack(Character character);
+
+
+
+    public abstract void attack(Character character);
 
 
     public Character(String name, int hp) {
