@@ -4,7 +4,7 @@ public abstract class Character {
     private String name;
     private int hp;
     private boolean isAlive;
-    private static Integer counter = 0;
+    private static Integer counter = 1;
 
     abstract void Attack(Character character);
 
