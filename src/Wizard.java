@@ -20,21 +20,16 @@ based on the intelligence of the spell
 public class Wizard extends Character {
 
     private int mana; // random between 10-50
-    int upperMana = 10;
-    int lowerMana = 50;
-
     private int intelligence; // random between 1-50
-    int upperIntelligence = 1;
-    int lowerIntelligence = 50;
+
 
     // A parameterized constructor that takes name, hp, mana, and intelligence
-
 
     public Wizard(String name, int hp, int mana, int intelligence) {
 
         super(name, hp);
-        setMana();
-        setIntelligence();
+        setMana(mana);
+        setIntelligence(intelligence);
     }
 
     // getters
@@ -47,21 +42,42 @@ public class Wizard extends Character {
     }
 
     // setters
-    public void setMana() {
-        this.mana = (int) (Math.random() * (upperMana - lowerMana)) + lowerMana;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
-    public void setIntelligence() {
-        this.intelligence =  (int) (Math.random() * (upperIntelligence - lowerIntelligence)) + lowerIntelligence;
+    public void setIntelligence(int intelligence) {
+        this.intelligence =  intelligence;
     }
 
-    public void attack(Character enemy) {
-
+    public int fireball(){
+        int damage = getIntelligence();
+        setMana(getMana() -5);
+        return damage;
+    }
+    public int staffHit(){
+        int damage = getIntelligence()/2;
+        setMana(getMana() + 1);
+        return damage;
     }
 
+    int calculateDamage() {
+        if (getMana()>=5){
+            return fireball();
+        }
+        if (getMana()==0){
+            setMana(getMana() + 2);
+            return 0;
+        }
+        if (getIntelligence()<5){
+            return staffHit();
+        }
+        return 0;
+    }
 
     @Override
-    void Attack(Character character) {
-
+    void attack(Character character) {
+        int damage = calculateDamage();
+        character.setHp(character.getHp()-damage);
     }
 }

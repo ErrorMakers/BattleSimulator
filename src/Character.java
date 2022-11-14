@@ -6,7 +6,7 @@ public abstract class Character {
     private boolean isAlive;
     private static Integer counter = 1;
 
-    abstract void Attack(Character character);
+    abstract void attack(Character character);
 
 
     public Character(String name, int hp) {
