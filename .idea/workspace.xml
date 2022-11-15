@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf9f1ca5-0156-4ff5-922f-8e77d2afd2d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../IH-W2-D1-MAVEN/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../IH-W2-D1-MAVEN/src/main/java/com/ironhack/Author.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../IH-W2-D1-MAVEN/src/main/java/com/ironhack/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../IH_W1_D5_GROUP/src/Wizard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../IH_W2_D1_JSON/src/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../IH_W2_D1_JSON/src/InvoiceItems.java" afterDir="false" />
-    </list>
+    <list default="true" id="cf9f1ca5-0156-4ff5-922f-8e77d2afd2d6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
