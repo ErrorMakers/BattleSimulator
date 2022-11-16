@@ -2,23 +2,24 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static Scanner scanner = new Scanner(System.in);
+    public Scanner scanner = new Scanner(System.in);
+    private boolean isChoosingGameMode = true;
 
 
-
-
-    public static int letPlayerChooseGameMode() {
+    public int letPlayerChooseGameMode() {
         System.out.println("Choose a game mode... \n1-Create your Characters\n2-Create Random Characters");
-        switch (scanner.nextInt()) {
-            case 1:
-                return 1;
-            case 2:
-                return 2;
-            default:
-                return 0;
-        }
+        //TODO: Check for correct input values
+        return scanner.nextInt();
     }
-    public static int[] createCharacterByInput() {
+
+    public String createName() {
+        scanner.nextLine();
+        System.out.println("Insert Character name: ");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    public int[] createCharacterByInput() {
         System.out.println("Choose between Warrior or Wizard...\n1-Warrior\n2-Wizard");
         int characterChoice = scanner.nextInt();
 
@@ -40,15 +41,16 @@ public class Menu {
             int mana = scanner.nextInt();
             return new int[]{characterChoice, hp, mana, intelligence};
         }
+        //TODO: check for valid inputs
         return null;
     }
 
-    //Warrior o Wizard / Name / Hp (100,200 o 50,100) / Stamina - Intelligence - Mana - Strength
-    public static void menu() {
+    public boolean isChoosingGameMode() {
+        return isChoosingGameMode;
+    }
 
-        int option;
-        Scanner scanner = new Scanner(System.in);
-
+    public void setChoosingGameMode(boolean isChoosingGameMode) {
+        this.isChoosingGameMode = isChoosingGameMode;
     }
 }
 

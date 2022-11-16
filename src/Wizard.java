@@ -80,4 +80,13 @@ public class Wizard extends Character {
         int damage = calculateDamage();
         character.setHp(character.getHp()-damage);
     }
+
+    @Override
+    public String toString() {
+        String[] superData = super.toString().split(" ");
+        return superData[0] + "(" + this.getClass().getName() + ")" +
+                "[HP: " + superData[1] + "][MANA: " + mana + "][INT: " + intelligence +
+                "]";
+    }
+
 }
