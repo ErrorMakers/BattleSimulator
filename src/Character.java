@@ -4,9 +4,8 @@ public abstract class Character implements Attacker {
     private String name;
     private int hp;
     private boolean isAlive;
-
     private static Integer counter = 0;
-
+    protected Race race;
 
 
     public abstract void attack(Character character);
@@ -42,7 +41,10 @@ public abstract class Character implements Attacker {
     }
 
     public void setHp(int hp) {
+
         this.hp = hp;
+        if(hp <= 0) isAlive = false;
+        else if (hp > 0) isAlive = true;
     }
 
     public boolean isAlive() {
