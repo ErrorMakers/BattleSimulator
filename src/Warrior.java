@@ -5,8 +5,8 @@ public class Warrior extends Character {
     //constructor name, hp, stamina, strength
     public Warrior(String name, int hp, int stamina, int strength) {
         super(name, hp);
-          setStamina(stamina);
-          setStrength(strength);
+        setStamina(stamina);
+        setStrength(strength);
     }
     public int getStamina() {
         return stamina;
@@ -22,7 +22,7 @@ public class Warrior extends Character {
         this.strength = strength;
     }
 
-     public int heavyAttack(){
+    public int heavyAttack(){
         int damage = getStrength();
         setStamina(getStamina() -5);
         return damage;
@@ -45,11 +45,19 @@ public class Warrior extends Character {
             return weakAttack();
         }
         return 0;
-         }
+    }
 
     @Override
     public void attack(Character character) {
         int damage = calculateDamage();
         character.setHp(character.getHp()-damage);
+    }
+
+    @Override
+    public String toString() {
+        String[] superData = super.toString().split(" ");
+        return superData[0] + "(" + this.getClass().getName() + ")" +
+                "[HP: " + superData[1] + "][STA: " + stamina + "][STR: " + strength +
+                "]";
     }
 }

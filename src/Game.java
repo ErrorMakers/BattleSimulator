@@ -1,17 +1,18 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Game {
-    private boolean isMenuRunning = true;
-    private boolean isGameRunning = false;
     private int currentRound = 0;
     private static Random rand = new Random();
     private Character duelistOne;
     private Character duelistTwo;
     private ArrayList<Character> duelists = new ArrayList<>();
-    private static Menu menu;
+    private Menu menu;
     private static String log;
     private static String[] names = {"Dumbledore", "Snape", "Thanos el rompe anos", "Thor", "Shrek", "Juan Soto", "Jeff Bezos", "Justiniano", "Snow"};
+    private Map<String, Object> gameSetup = new HashMap<>();
 
 
     private static int getRandomNumberBetween(int min, int max) {
@@ -35,29 +36,43 @@ public class Game {
         duelistTwo.attack(duelistOne);
     }
 
-    private void setup() {
+    private void createRandomDuelists() {
         duelists.add(generateRandomCharacter());
         duelists.add(generateRandomCharacter());
     }
 
-    public void init() {
-        while(isMenuRunning){
-            int playerMenuChoice = Menu.letPlayerChooseGameMode();
+    public void setup() {
+        if (gameSetup.get("mode").equals("random")) createRandomDuelists();
+        duelistOne = duelists.get(0);
+        duelistTwo = duelists.get(1);
+        System.out.println("The clash between " + duelistOne.toString() + " vs " + duelistTwo.toString() + " is about to start!");
+    }
 
+    public void init() {
+        Character duelist;
+        menu = new Menu();
+        while(menu.isChoosingGameMode()){
+            int playerMenuChoice = menu.letPlayerChooseGameMode();
             if (playerMenuChoice == 2) {
-                isMenuRunning = false;
+                gameSetup.put("mode", "random");
                 setup();
             }else if (playerMenuChoice == 1) {
-                int[] playerCharacterStatsChoice = Menu.createCharacterByInput();
-                System.out.println("Insert Character name: ");
-                String playerName = Menu.scanner.nextLine();
-                if (playerCharacterStatsChoice[0] == 1) {
-                    duelists.add(new Warrior(playerName, playerCharacterStatsChoice[1], playerCharacterStatsChoice[2], playerCharacterStatsChoice[3]));
+                gameSetup.put("mode", "manual");
+                while(duelists.size() < 2) {
+                    System.out.println("Fill the following inputs for the character number " + (duelists.size() + 1));
+                    String playerName = menu.createName();
+                    int[] playerCharacterStatsChoice = menu.createCharacterByInput();
+                    if (playerCharacterStatsChoice[0] == 1) {
+                        duelist = new Warrior(playerName, playerCharacterStatsChoice[1], playerCharacterStatsChoice[2], playerCharacterStatsChoice[3]);
+                        duelists.add(duelist);
+                    }
+                    else {
+                        duelist = new Wizard(playerName, playerCharacterStatsChoice[1], playerCharacterStatsChoice[2], playerCharacterStatsChoice[3]);
+                        duelists.add(duelist);
+                    }
+                    System.out.println("Created Character: " + duelist.toString());
                 }
-                else if (playerCharacterStatsChoice[0] == 2) {
-                    duelists.add(new Wizard(playerName, playerCharacterStatsChoice[1], playerCharacterStatsChoice[2], playerCharacterStatsChoice[3]));
-                }
-
+                menu.setChoosingGameMode(false);
             }
         }
 
