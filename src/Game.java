@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Game {
     private int currentRound = 0;
@@ -9,9 +7,11 @@ public class Game {
     private Character duelistOne;
     private Character duelistTwo;
     private ArrayList<Character> duelists = new ArrayList<>();
+    private String[] charactersData;
     private Menu menu;
     //private static String log;
-    private static String[] names = {"Dumbledore", "Snape", "Rompeanos", "Thor", "Shrek", "JuanSoto", "JeffBezos", "Justiniano", "Snow"};
+    private static final String[] warriorNames = {"Hercules", "Genghis", "Rompeanos", "Thor", "Shrek", "JuanSoto", "JeffBezos", "Justiniano", "Snow"};
+    private static final String[] wizardNames = {"Snape", "Dumbledore", "Harry", "Hermione", "Isabella", "Elizabeth", "Rachel", "Michelle", "McGonagall"};
     private Map<String, Object> gameSetup = new HashMap<>();
     private boolean isBattling = true;
     private boolean isRestart = false;
@@ -20,16 +20,19 @@ public class Game {
     private static int getRandomNumberBetween(int min, int max) {
         return rand.nextInt(max - min) + min;
     }
-    private static String getRandomName () {
-        return names[rand.nextInt(names.length)];
+    private static String getRandomWarriorName () {
+        return warriorNames[rand.nextInt(warriorNames.length)];
+    }
+    private static String getRandomWizardName () {
+        return wizardNames[rand.nextInt(wizardNames.length)];
     }
 
     private Character generateRandomCharacter() {
         int race = rand.nextInt(3 - 1) + 1;
         if(race == 1) {
-            return new Warrior(getRandomName(), getRandomNumberBetween(100, 200), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 10));  // Warrior
+            return new Warrior(getRandomWarriorName(), getRandomNumberBetween(100, 200), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 10));  // Warrior
         }
-        return new Wizard(getRandomName(), getRandomNumberBetween(50, 100), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 50));  // Wizard
+        return new Wizard(getRandomWizardName(), getRandomNumberBetween(50, 100), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 50));  // Wizard
 
     }
 
@@ -38,8 +41,21 @@ public class Game {
         duelists.add(generateRandomCharacter());
     }
 
+    private void createDuelistsFromCSV() {
+        for (String line : charactersData) {
+            String[] data = line.split(",");
+            if (data[0].equals("Warrior")){
+                duelists.add(new Warrior(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4])));
+            }else if(data[0].equals("Wizard")){
+                duelists.add(new Wizard(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4])));
+            }
+        }
+        ImportCharacter.clean();
+    }
+
     public void setup() {
         if (gameSetup.get("mode").equals("random")) createRandomDuelists();
+        else if (gameSetup.get("mode").equals("csv")) createDuelistsFromCSV();
         duelistOne = duelists.get(0);
         duelistTwo = duelists.get(1);
         System.out.println("The clash between " + duelistOne.toString() + " vs " + duelistTwo.toString() + " is about to start!");
@@ -76,11 +92,11 @@ public class Game {
         menu = new Menu();
         while(menu.isChoosingGameMode()){
             int playerMenuChoice = menu.letPlayerChooseGameMode();
-            if (playerMenuChoice == 2) {
+            if (playerMenuChoice == 2) { //Random creation
                 gameSetup.put("mode", "random");
                 menu.setChoosingGameMode(false);
                 setup();
-            }else if (playerMenuChoice == 1) {
+            }else if (playerMenuChoice == 1) { //Manual creation
                 gameSetup.put("mode", "manual");
                 while(duelists.size() < 2) {
                     System.out.println("Fill the following inputs for the character number " + (duelists.size() + 1));
@@ -97,6 +113,17 @@ public class Game {
                     System.out.println("Created Character: " + duelist.toString());
                 }
                 menu.setChoosingGameMode(false);
+            }else if (playerMenuChoice == 3) {  //CSV Import
+                gameSetup.put("mode", "csv");
+                List<String> dataCSV;
+                try {
+                    dataCSV = ImportCharacter.getCharacterDataFromCSV();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                charactersData = menu.createCharactersFromCSV(dataCSV);
+                menu.setChoosingGameMode(false);
+                setup();
             }
         }
     }
@@ -153,5 +180,4 @@ public class Game {
         duelists = new ArrayList<>();
         menu = null;
     }
-
 }

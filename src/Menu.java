@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -7,7 +8,7 @@ public class Menu {
 
 
     public int letPlayerChooseGameMode() {
-        System.out.println("Choose a game mode... \n1-Create your Characters\n2-Create Random Characters");
+        System.out.println("Choose a game mode... \n1-Create your Characters\n2-Create Random Characters\n3-Import from CSV");
         //TODO: Check for correct input values
         return scanner.nextInt();
     }
@@ -43,6 +44,26 @@ public class Menu {
         }
         //TODO: check for valid inputs
         return null;
+    }
+
+    public String[] createCharactersFromCSV(List<String> data) {
+        String[] attributes;
+        int counter = 1;
+        for (String line : data) {
+            attributes = line.split(",");
+            if (attributes[0].equals("warrior")) {
+                System.out.println(counter + "- Type: " + attributes[0] + " | Name: " + attributes[1] + " | HP: " + attributes[2] + " | STA: " + attributes[3] + " | STR: " + attributes[4]);
+                counter++;
+            }else {
+                System.out.println(counter + "- Type: " + attributes[0] + " | Name: " + attributes[1] + " | HP: " + attributes[2] + " | MANA: " + attributes[3] + " | INT: " + attributes[4]);
+                counter++;
+            }
+        }
+        System.out.println("Type, separated by spaces, the two numbers from the list you wish to import to the game...");
+        scanner.nextLine();
+        String choices = scanner.nextLine();
+        String[] selectedCharactersData = new String[]{data.get(Integer.parseInt(choices.split(" ")[0]) - 1), data.get(Integer.parseInt(choices.split(" ")[1]) - 1)};
+        return selectedCharactersData;
     }
 
     public boolean isChoosingGameMode() {
