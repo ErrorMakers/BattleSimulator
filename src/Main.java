@@ -13,5 +13,8 @@ public class Main {
         scanner.nextLine();
         game.setup();
 
+        System.out.println("Enter any input to start the battle");
+        scanner.nextLine();
+        game.beginBattle();
     }
 }

@@ -21,15 +21,15 @@ public class Wizard extends Character {
 
     private int mana; // random between 10-50
     private int intelligence; // random between 1-50
-
-
+    protected int[] initialState = new int[2];
     // A parameterized constructor that takes name, hp, mana, and intelligence
 
     public Wizard(String name, int hp, int mana, int intelligence) {
-
         super(name, hp);
         setMana(mana);
         setIntelligence(intelligence);
+        race = Race.WIZARD;
+        setInitialState(new int[]{hp, mana});
     }
 
     // getters
@@ -53,26 +53,36 @@ public class Wizard extends Character {
     public int fireball(){
         int damage = getIntelligence();
         setMana(getMana() -5);
+        System.out.println(getName() + " casts a huge fireball for " + damage + " damage and loses 5 mana");
         return damage;
     }
     public int staffHit(){
         int damage = getIntelligence()/2;
         setMana(getMana() + 1);
+        System.out.println(getName() + " does a staff hit for " + damage + " damage and restores 1 mana");
         return damage;
     }
 
     int calculateDamage() {
-        if (getMana()>=5){
+        if (Game.rand.nextInt(101) >= 50 && getMana()>=5){
             return fireball();
         }
-        if (getMana()==0){
+        else if (getMana()==0){
             setMana(getMana() + 2);
+            System.out.println(getName() + "does nothing due to lack of mana and restores 2 mana");
             return 0;
         }
-        if (getIntelligence()<5){
+        else{
             return staffHit();
         }
-        return 0;
+    }
+
+    public int[] getInitialState() {
+        return initialState;
+    }
+
+    public void setInitialState(int[] initialState) {
+        this.initialState = initialState;
     }
 
     @Override
@@ -83,9 +93,8 @@ public class Wizard extends Character {
 
     @Override
     public String toString() {
-        String[] superData = super.toString().split(" ");
-        return superData[0] + "(" + this.getClass().getName() + ")" +
-                "[HP: " + superData[1] + "][MANA: " + mana + "][INT: " + intelligence +
+        return getName() + "(" + this.getClass().getName() + ")" +
+                "[HP: " + getHp() + "][MANA: " + mana + "][INT: " + intelligence +
                 "]";
     }
 

@@ -5,14 +5,16 @@ import java.util.Random;
 
 public class Game {
     private int currentRound = 0;
-    private static Random rand = new Random();
+    public static Random rand = new Random();
     private Character duelistOne;
     private Character duelistTwo;
     private ArrayList<Character> duelists = new ArrayList<>();
     private Menu menu;
-    private static String log;
-    private static String[] names = {"Dumbledore", "Snape", "Thanos el rompe anos", "Thor", "Shrek", "Juan Soto", "Jeff Bezos", "Justiniano", "Snow"};
+    //private static String log;
+    private static String[] names = {"Dumbledore", "Snape", "Rompeanos", "Thor", "Shrek", "JuanSoto", "JeffBezos", "Justiniano", "Snow"};
     private Map<String, Object> gameSetup = new HashMap<>();
+    private boolean isBattling = true;
+    private boolean isRestart = false;
 
 
     private static int getRandomNumberBetween(int min, int max) {
@@ -23,17 +25,12 @@ public class Game {
     }
 
     private Character generateRandomCharacter() {
-        int race = rand.nextInt(2 - 1) + 1;
+        int race = rand.nextInt(3 - 1) + 1;
         if(race == 1) {
             return new Warrior(getRandomName(), getRandomNumberBetween(100, 200), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 10));  // Warrior
         }
         return new Wizard(getRandomName(), getRandomNumberBetween(50, 100), getRandomNumberBetween(10, 50), getRandomNumberBetween(1, 50));  // Wizard
 
-    }
-
-    public void nextRound() {
-        duelistOne.attack(duelistTwo);
-        duelistTwo.attack(duelistOne);
     }
 
     private void createRandomDuelists() {
@@ -46,6 +43,32 @@ public class Game {
         duelistOne = duelists.get(0);
         duelistTwo = duelists.get(1);
         System.out.println("The clash between " + duelistOne.toString() + " vs " + duelistTwo.toString() + " is about to start!");
+
+        if (isRestart) {
+            if (duelistOne.race == Race.WIZARD) {
+                Wizard wizard = (Wizard)duelistOne;
+                wizard.setHp(wizard.getInitialState()[0]);
+                wizard.setMana(wizard.getInitialState()[1]);
+                duelistOne = wizard;
+            }else if (duelistOne.race == Race.WARRIOR) {
+                Warrior warrior = (Warrior)duelistOne;
+                warrior.setHp(warrior.getInitialState()[0]);
+                warrior.setStamina(warrior.getInitialState()[1]);
+                duelistOne = warrior;
+            }
+            if (duelistTwo.race == Race.WIZARD) {
+                Wizard wizard = (Wizard)duelistTwo;
+                wizard.setHp(wizard.getInitialState()[0]);
+                wizard.setMana(wizard.getInitialState()[1]);
+                duelistTwo = wizard;
+            }else if (duelistTwo.race == Race.WARRIOR) {
+                Warrior warrior = (Warrior)duelistTwo;
+                warrior.setHp(warrior.getInitialState()[0]);
+                warrior.setStamina(warrior.getInitialState()[1]);
+                duelistTwo = warrior;
+            }
+            beginBattle();
+        }
     }
 
     public void init() {
@@ -55,6 +78,7 @@ public class Game {
             int playerMenuChoice = menu.letPlayerChooseGameMode();
             if (playerMenuChoice == 2) {
                 gameSetup.put("mode", "random");
+                menu.setChoosingGameMode(false);
                 setup();
             }else if (playerMenuChoice == 1) {
                 gameSetup.put("mode", "manual");
@@ -75,7 +99,59 @@ public class Game {
                 menu.setChoosingGameMode(false);
             }
         }
-
-
     }
+    public void beginBattle() {
+        while (isBattling) {
+            nextRound();
+        }
+    }
+    public void nextRound() {
+        if (duelistOne.isAlive() && duelistTwo.isAlive()) {  //Los dos vivos
+            ++currentRound;
+            System.out.println("ROUND: " + currentRound);
+            System.out.println(duelistOne.toString() + "                           " + duelistTwo.toString());
+            duelistOne.attack(duelistTwo);
+            duelistTwo.attack(duelistOne);
+            System.out.println("========================================================================================================================================");
+        }else if (!duelistOne.isAlive() && !duelistTwo.isAlive()) {  // Empate
+            System.out.println(duelistOne.toString() + "                           " + duelistTwo.toString());
+            System.out.println("Battle ended in a tie!");
+            System.out.println("Restarting. . .");
+            isRestart = true;
+            currentRound = 0;
+            System.out.println("Input any key to continue");
+            menu.scanner.nextLine();
+            setup();
+        }
+        else { // Uno vivo uno muerto
+            String winner = duelistOne.isAlive() ? duelistOne.getName() : duelistTwo.getName();
+            endMatch(winner);
+        }
+    }
+
+    public void endMatch(String winner) {
+        System.out.println(duelistOne.toString() + "                           " + duelistTwo.toString());
+        System.out.println("Battle ended!");
+        System.out.println(winner + " has won the battle!");
+
+        System.out.println("Do you want to restart the game?\n1- Yes\n2- No");
+        int decision = menu.scanner.nextInt();
+
+        if (decision == 2) System.exit(0);
+        cleanUp();
+        init();
+        setup();
+    }
+
+    private void cleanUp() {
+        isBattling = true;
+        isRestart = false;
+        currentRound = 0;
+        gameSetup = new HashMap<>();
+        duelistOne = null;
+        duelistTwo = null;
+        duelists = new ArrayList<>();
+        menu = null;
+    }
+
 }
