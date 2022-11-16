@@ -1,57 +1,54 @@
-public class Menu extends Game {
+import java.util.Scanner;
 
-    private final Scanner scanner = new Scanner(System.in);
-    private final boolean exit = false;
+public class Menu {
 
-    private int option;
+    public static Scanner scanner = new Scanner(System.in);
 
-    public Menu(int option) {
-        this.option = option;
+
+
+
+    public static int letPlayerChooseGameMode() {
+        System.out.println("Choose a game mode... \n1-Create your Characters\n2-Create Random Characters");
+        switch (scanner.nextInt()) {
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    public static int[] createCharacterByInput() {
+        System.out.println("Choose between Warrior or Wizard...\n1-Warrior\n2-Wizard");
+        int characterChoice = scanner.nextInt();
+
+        if (characterChoice == 1) {
+            System.out.println("Set your hp: ");
+            int hp = scanner.nextInt();
+            System.out.println("Set your strength: ");
+            int strength = scanner.nextInt();
+            System.out.println("Set your stamina: ");
+            int stamina = scanner.nextInt();
+            return new int[]{characterChoice, hp, stamina, strength};
+        }
+        else if (characterChoice == 2) {
+            System.out.println("Set your hp: ");
+            int hp = scanner.nextInt();
+            System.out.println("Set your intelligence: ");
+            int intelligence = scanner.nextInt();
+            System.out.println("Set your mana: ");
+            int mana = scanner.nextInt();
+            return new int[]{characterChoice, hp, mana, intelligence};
+        }
+        return null;
     }
 
+    //Warrior o Wizard / Name / Hp (100,200 o 50,100) / Stamina - Intelligence - Mana - Strength
     public static void menu() {
 
         int option;
         Scanner scanner = new Scanner(System.in);
-        Game game = new Game();
-        GameData gameData = new GameData();
-        Land land = new Land();
 
-
-        while (true) {
-
-
-            option = ConsoleQuery.queryToConsole(scanner, ConsoleColors.BLACK_BACKGROUND + ConsoleColors.YELLOW_BOLD_BRIGHT + "WELLCOME TO THE GAME: HOLLIGANS OF JAVA: ",
-                    new String[]{"Play new custom party", "Play new random party", "Play last party", "Check the graveyard", "Read the readme file", "Exit"}, 1, 6);
-
-            switch (option) {
-                case 1:
-                    game.startCustomParty(gameData);
-                    FileReadAndWrite.writeFile(gameData);
-                    game.startGame(land, gameData);
-                    break;
-                case 2:
-                    game.randomParty(gameData);
-                    FileReadAndWrite.writeFile(gameData);
-                    game.startGame(land, gameData);
-                    break;
-                case 3:
-                    gameData = game.playLastParty();
-                    game.startGame(land, gameData);
-                    break;
-                case 4:
-                    land.printGraveyard();
-                    break;
-                case 5:
-                    ReadMe.showReadMe();
-                    break;
-                case 6:
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Choose the correct option.");
-            }
-        }
     }
 }
 
