@@ -19,6 +19,11 @@ public class Game {
     private boolean isRestart = false;
 
 
+    /*
+    Creamos el método getRandomNumberBetween que permitirá generar los numeros aleatorios que
+    son necesarios para definir las estadísticas de los jugadores y será usados en los métodos
+    posteriores
+     */
     private static int getRandomNumberBetween(int min, int max) {
         return rand.nextInt(max - min) + min;
     }
@@ -28,6 +33,11 @@ public class Game {
     private static String getRandomWizardName () {
         return wizardNames[rand.nextInt(wizardNames.length)];
     }
+
+    /*
+    En este método siguiente se llamará al método getRandomNumberBetween para generar números aleatorios
+    y añadirlos a su correspondiente propiedad.
+     */
 
     private Character generateRandomCharacter() {
         int race = rand.nextInt(3 - 1) + 1;
@@ -55,7 +65,13 @@ public class Game {
         ImportCharacter.clean();
     }
 
+    /*
+    El método setup se encarga, cuando el jugador ha elegidos los métodos random o csv, de asignar a los duelistas
+    sus stats según corresponda en cada caso.
+    Por último, al terminar, llama al método beginBattle para iniciar el duelo.j
+     */
     public void setup() {
+
         if (gameSetup.get("mode").equals("random")) createRandomDuelists();
         else if (gameSetup.get("mode").equals("csv")) createDuelistsFromCSV();
         duelistOne = duelists.get(0);
@@ -88,6 +104,12 @@ public class Game {
             beginBattle();
         }
     }
+
+    /*
+    El método init, como indica, incia el juego, la elección de Characters, su método de elección
+    y en él mismo se definen las stats en el método manual.
+    Al final llama al método setup para continuar en la elaboración del juego en los casos random y CSV.
+     */
 
     public void init() {
         Character duelist;
@@ -136,12 +158,24 @@ public class Game {
             System.out.println("hola");
         }
     }
+
+    /*
+    El método beginBattle utiliza un bucle While para determinar si continuá el juego a través de la propiedad
+    isBattling y mientras sea true llanará a nextRound con el método sleepFor para el tiempo de cada ronda
+     */
     public void beginBattle() {
         while (isBattling) {
             nextRound();
             sleepFor(2000);
         }
     }
+
+    /*
+    nextRound usa la propiedad isAlive que tiene cada duelist (Character) para determinar si ambos duelistas
+    están vivos y así seguir la batalla llamando a attack que tiene cada Character de su interface attack.
+    Llama al método setup en caso de empate para reiniciar y endMatch cuando uno de los dos duelistas ha ganado.
+     */
+
     public void nextRound() {
         if (duelistOne.isAlive() && duelistTwo.isAlive()) {  //Los dos vivos
             ++currentRound;
@@ -162,15 +196,21 @@ public class Game {
         }
         else { // Uno vivo uno muerto
             String winner = duelistOne.isAlive() ? duelistOne.getName() : duelistTwo.getName();
-            endMatch(winner);
+            String loser =! duelistOne.isAlive() ? duelistOne.getName() : duelistTwo.getName();
+            endMatch(winner, loser);
         }
     }
 
-    public void endMatch(String winner) {
+    /*
+    El método endMatch imprime cuando se acaba el duelo: las estadísticas, ganador y perdedor.
+    Despues, según el input del jugador, sale del juego o reincia la batalla llamando los métodos init, cleanUp, setup
+     */
+
+    public void endMatch(String winner, String loser) {
         System.out.println(duelistOne.toString() + "                           " + duelistTwo.toString());
         System.out.println("Battle ended!");
         System.out.println(winner + " has won the battle!");
-        System.out.println("Press f to pay respects");
+        System.out.println("Press f to pay respects to " + loser);
         System.out.println("Do you want to restart the game?\n1- Yes\n2- No");
         int decision = menu.scanner.nextInt();
 
@@ -179,6 +219,11 @@ public class Game {
         init();
         setup();
     }
+
+    /*
+    El método cleanUp se llama al finalizar la batalla y ser ésta reiniciada.
+    Tomas las stats de cada Character y las reincia a sus valores inciales.
+     */
 
     private void cleanUp() {
         isBattling = true;

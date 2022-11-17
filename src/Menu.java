@@ -20,6 +20,8 @@ public class Menu {
         return name;
     }
 
+
+
     public int[] createCharacterByInput() {
         int characterChoice = 0;
             characterChoice = inputValidation("Choose between Warrior or Wizard...\n1-Warrior\n2-Wizard", scanner);
@@ -81,6 +83,11 @@ public class Menu {
     public void setChoosingGameMode(boolean isChoosingGameMode) {
         this.isChoosingGameMode = isChoosingGameMode;
     }
+
+    /*
+    Este método es llamado para hacer comprobaciones de los inputs realizados por el jugador
+    para que estos cumplan el estandar y sino devuelva una excepción que pida al usuario introducirlo de nuevo.
+     */
 
     public int inputValidation(String message, Scanner scanner){
         System.out.println(message);
