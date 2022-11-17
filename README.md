@@ -31,6 +31,6 @@
 
 * The battles are 1 vs 1.
 * The battles are by rounds, in each round both characters will attack at the same time.
-* Just choose between a completely random battle or customize your own by creating your characters.
+* Just choose between a completely random battle , customize your own by creating your characters or import them from a csv file.
 * Follow the instructions and PLAY!!!
 
