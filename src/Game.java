@@ -1,6 +1,8 @@
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import static java.lang.Thread.sleep;
+
 public class Game {
     private int currentRound = 0;
     public static Random rand = new Random();
@@ -110,7 +112,7 @@ public class Game {
                         duelist = new Wizard(playerName, playerCharacterStatsChoice[1], playerCharacterStatsChoice[2], playerCharacterStatsChoice[3]);
                         duelists.add(duelist);
                     }
-                    System.out.println("Created Character: " + duelist.toString());
+                    System.out.println("Created Character: " + duelist);
                 }
                 menu.setChoosingGameMode(false);
             }else if (playerMenuChoice == 3) {  //CSV Import
@@ -127,9 +129,17 @@ public class Game {
             }
         }
     }
+    public void sleepFor(int millis) {
+        try {
+            sleep(millis);
+        }catch (InterruptedException e) {
+            System.out.println("hola");
+        }
+    }
     public void beginBattle() {
         while (isBattling) {
             nextRound();
+            sleepFor(2000);
         }
     }
     public void nextRound() {
