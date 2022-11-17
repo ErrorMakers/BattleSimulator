@@ -41,7 +41,6 @@ public class Menu {
         }
 
 
-
     public String[] createCharactersFromCSV(List<String> data) {
         String[] attributes;
         int counter = 1;
