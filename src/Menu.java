@@ -20,30 +20,30 @@ public class Menu {
     }
 
     public int[] createCharacterByInput() {
-        System.out.println("Choose between Warrior or Wizard...\n1-Warrior\n2-Wizard");
-        int characterChoice = scanner.nextInt();
+        int characterChoice = 0;
+            characterChoice = inputValidation("Choose between Warrior or Wizard...\n1-Warrior\n2-Wizard", scanner);
+            if (characterChoice == 1) {
+                int hp = inputValidation("Set your hp: ", scanner);
+                int strength = inputValidation()
+                System.out.println("Set your stamina: ");
+                int stamina = scanner.nextInt();
+                return new int[]{characterChoice, hp, stamina, strength};
+            } else if (characterChoice == 2) {
+                System.out.println("Set your hp: ");
+                int hp = scanner.nextInt();
+                System.out.println("Set your intelligence: ");
+                int intelligence = scanner.nextInt();
+                System.out.println("Set your mana: ");
+                int mana = scanner.nextInt();
+                return new int[]{characterChoice, hp, mana, intelligence};
+            } else {
+                System.out.println("Please, enter a valid character");
 
-        if (characterChoice == 1) {
-            System.out.println("Set your hp: ");
-            int hp = scanner.nextInt();
-            System.out.println("Set your strength: ");
-            int strength = scanner.nextInt();
-            System.out.println("Set your stamina: ");
-            int stamina = scanner.nextInt();
-            return new int[]{characterChoice, hp, stamina, strength};
-        }
-        else if (characterChoice == 2) {
-            System.out.println("Set your hp: ");
-            int hp = scanner.nextInt();
-            System.out.println("Set your intelligence: ");
-            int intelligence = scanner.nextInt();
-            System.out.println("Set your mana: ");
-            int mana = scanner.nextInt();
-            return new int[]{characterChoice, hp, mana, intelligence};
-        }
-        //TODO: check for valid inputs
+            }
         return null;
-    }
+        }
+
+
 
     public boolean isChoosingGameMode() {
         return isChoosingGameMode;
@@ -52,5 +52,8 @@ public class Menu {
     public void setChoosingGameMode(boolean isChoosingGameMode) {
         this.isChoosingGameMode = isChoosingGameMode;
     }
+
+
+
 }
 
