@@ -160,7 +160,7 @@ public class Game {
         System.out.println(duelistOne.toString() + "                           " + duelistTwo.toString());
         System.out.println("Battle ended!");
         System.out.println(winner + " has won the battle!");
-
+        System.out.println("Press f to pay respects");
         System.out.println("Do you want to restart the game?\n1- Yes\n2- No");
         int decision = menu.scanner.nextInt();
 
