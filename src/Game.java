@@ -10,7 +10,7 @@ public class Game {
     private String[] charactersData;
     private Menu menu;
     //private static String log;
-    private static final String[] warriorNames = {"Hercules", "Genghis", "Rompeanos", "Thor", "Shrek", "JuanSoto", "JeffBezos", "Justiniano", "Snow"};
+    private static final String[] warriorNames = {"Hercules", "Genghis", "Rompeanos", "Thor", "Shrek", "JuanSoto", "JeffBezos", "Justiniano", "Snow", "ElBicho"};
     private static final String[] wizardNames = {"Snape", "Dumbledore", "Harry", "Hermione", "Isabella", "Elizabeth", "Rachel", "Michelle", "McGonagall"};
     private Map<String, Object> gameSetup = new HashMap<>();
     private boolean isBattling = true;

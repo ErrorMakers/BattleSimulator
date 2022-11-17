@@ -1,6 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Menu {
 
@@ -54,11 +55,24 @@ public class Menu {
                 counter++;
             }
         }
-        System.out.println("Type, separated by spaces, the two numbers from the list you wish to import to the game...");
         scanner.nextLine();
-        String choices = scanner.nextLine();
-        String[] selectedCharactersData = new String[]{data.get(Integer.parseInt(choices.split(" ")[0]) - 1), data.get(Integer.parseInt(choices.split(" ")[1]) - 1)};
-        return selectedCharactersData;
+        String choices;
+        String[] splitChoices;
+        while (true) {
+            System.out.println("Type, separated by spaces, the two numbers from the list you wish to import to the game...");
+            choices = scanner.nextLine();
+            splitChoices = choices.split(" ");
+            if (splitChoices.length != 2) {
+                continue;
+            } else {
+                try {
+                    String[] selectedCharactersData = new String[]{data.get(Integer.parseInt(splitChoices[0]) - 1), data.get(Integer.parseInt(splitChoices[1]) - 1)};
+                    return selectedCharactersData;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please, enter a valid format");
+                }
+            }
+        }
     }
 
     public boolean isChoosingGameMode() {
